@@ -9,7 +9,7 @@ import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from check_all_collisions import check_all_collisions, generate_collision_free_random_values
+from src.check_all_collisions import check_all_collisions, generate_collision_free_random_values
 
 # Dataset configuration
 GENERATE_DATASET = False  # Set to False for interactive mode
