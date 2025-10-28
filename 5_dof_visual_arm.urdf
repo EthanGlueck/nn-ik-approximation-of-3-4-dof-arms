@@ -1,0 +1,163 @@
+<?xml version="1.0"?>
+<robot name="6dof_arm">
+
+  <!-- Materials -->
+  <material name="gray"><color rgba="0.6 0.6 0.6 1"/></material>
+  <material name="blue"><color rgba="0.0 0.0 1.0 1"/></material>
+  <material name="green"><color rgba="0.0 1.0 0.0 1"/></material>
+  <material name="red"><color rgba="1.0 0.0 0.0 1"/></material>
+  <material name="yellow"><color rgba="1.0 1.0 0.0 1"/></material>
+  <material name="purple"><color rgba="1.0 0.0 1.0 1"/></material>
+
+
+  <link name="base_link">
+    <visual>
+      <geometry><box size="0.15 0.15 0.05"/></geometry>
+      <origin xyz="0 0 0.025" rpy="0 0 0"/>  <!-- sits flat on the ground -->
+      <material name="gray"/>
+    </visual>
+    <collision>
+      <geometry><box size="0.15 0.15 0.05"/></geometry>
+      <origin xyz="0 0 0.025"/>
+    </collision>
+    <inertial>
+      <mass value="2.0"/>
+      <origin xyz="0 0 0.025"/>
+      <inertia ixx="0.01" iyy="0.01" izz="0.01"/>
+    </inertial>
+  </link>
+
+
+  <link name="waist_link">
+    <visual>
+      <geometry><cylinder radius="0.03" length="0.08"/></geometry>
+      <origin xyz="0 0 0.04" rpy="0 0 0"/> <!-- vertical cylinder centered along z -->
+      <material name="blue"/>
+    </visual>
+    <collision>
+      <geometry><cylinder radius="0.03" length="0.08"/></geometry>
+      <origin xyz="0 0 0.04"/>
+    </collision>
+    <inertial>
+      <mass value="0.5"/>
+      <origin xyz="0 0 0.04"/>
+      <inertia ixx="0.002" iyy="0.002" izz="0.002"/>
+    </inertial>
+  </link>
+
+  <link name="link_1">
+    <visual>
+      <geometry><cylinder radius="0.015" length="0.2"/></geometry>
+      <origin xyz="0 0 0.1" rpy="0 0 0"/>
+      <material name="green"/>
+    </visual>
+    <collision>
+      <geometry><cylinder radius="0.015" length="0.2"/></geometry>
+      <origin xyz="0 0 0.1"/>
+    </collision>
+    <inertial>
+      <mass value="0.3"/>
+      <origin xyz="0 0 0.1"/>
+      <inertia ixx="0.0005" iyy="0.0005" izz="0.0005"/>
+    </inertial>
+  </link>
+
+ 
+  <link name="link_2">
+    <visual>
+      <geometry><cylinder radius="0.015" length="0.2"/></geometry>
+      <origin xyz="0 0 0.1" rpy="0 0 0"/>
+      <material name="red"/>
+    </visual>
+    <collision>
+      <geometry><cylinder radius="0.015" length="0.2"/></geometry>
+      <origin xyz="0 0 0.1"/>
+    </collision>
+    <inertial>
+      <mass value="0.3"/>
+      <origin xyz="0 0 0.1"/>
+      <inertia ixx="0.0005" iyy="0.0005" izz="0.0005"/>
+    </inertial>
+  </link>
+
+  <link name="link_3">
+    <visual>
+      <geometry><cylinder radius="0.015" length="0.2"/></geometry>
+      <origin xyz="0 0 0.1" rpy="0 0 0"/>
+      <material name="blue"/>
+    </visual>
+    <collision>
+      <geometry><cylinder radius="0.015" length="0.2"/></geometry>
+      <origin xyz="0 0 0.1"/>
+    </collision>
+    <inertial>
+      <mass value="0.3"/>
+      <origin xyz="0 0 0.1"/>
+      <inertia ixx="0.0005" iyy="0.0005" izz="0.0005"/>
+    </inertial>
+  </link>
+
+  <link name="link_4">
+    <visual>
+      <geometry><cylinder radius="0.015" length="0.2"/></geometry>
+      <origin xyz="0 0 0.1" rpy="0 0 0"/>
+      <material name="yellow"/>
+    </visual>
+    <collision>
+      <geometry><cylinder radius="0.015" length="0.2"/></geometry>
+      <origin xyz="0 0 0.1"/>
+    </collision>
+    <inertial>
+      <mass value="0.3"/>
+      <origin xyz="0 0 0.1"/>
+      <inertia ixx="0.0005" iyy="0.0005" izz="0.0005"/>
+    </inertial>
+  </link>
+
+ 
+
+  <joint name="joint_waist" type="revolute">
+    <parent link="base_link"/>
+    <child link="waist_link"/>
+    <origin xyz="0 0 0.05" rpy="0 0 0"/> <!-- top of base box -->
+    <axis xyz="0 0 1"/>                  <!-- rotate around Z -->
+    <limit effort="10" velocity="1.0" lower="-3.14" upper="3.14"/>
+  </joint>
+
+
+  <joint name="joint_shoulder" type="revolute">
+    <parent link="waist_link"/>
+    <child link="link_1"/>
+    <origin xyz="0 0 0.08" rpy="0 0 0"/> <!-- top of waist cylinder -->
+    <axis xyz="1 0 0"/>                  <!-- rotate around X -->
+    <limit effort="10" velocity="1.0" lower="-1.57" upper="1.57"/>
+  </joint>
+
+
+  <joint name="joint_elbow" type="revolute">
+    <parent link="link_1"/>
+    <child link="link_2"/>
+    <origin xyz="0 0 0.2" rpy="0 0 0"/> <!-- top of link_1 -->
+    <axis xyz="1 0 0"/>                  <!-- rotate around X -->
+    <limit effort="10" velocity="1.0" lower="-2.62" upper="2.62"/>
+  </joint>
+
+  <joint name="joint_elbow2" type="revolute">
+    <parent link="link_2"/>
+    <child link="link_3"/>
+    <origin xyz="0 0 0.2" rpy="0 0 0"/> <!-- top of link_2 -->
+    <axis xyz="0 1 0"/>                  <!-- rotate around Y -->
+    <limit effort="10" velocity="1.0" lower="-2.62" upper="2.62"/>
+  </joint>
+
+  <joint name="joint_wrist1" type="revolute">
+    <parent link="link_3"/>
+    <child link="link_4"/>
+    <origin xyz="0 0 0.2" rpy="0 0 0"/> <!-- top of link_3 -->
+    <axis xyz="1 0 0"/>                  <!-- rotate around X -->
+    <limit effort="10" velocity="1.0" lower="-2.62" upper="2.62"/>
+  </joint>
+
+
+
+</robot>
